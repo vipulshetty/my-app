@@ -4,6 +4,7 @@ import Ballpit from "@/components/ui/Ballpit";
 import { portfolioData } from "@/lib/portfolio-data";
 import { motion } from "framer-motion";
 import { SkillsMarquee } from "@/components/ui/SkillsMarquee";
+import { ThreeDCarousel } from "@/components/ui/ThreeDCarousel";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Timeline } from "@/components/ui/timeline";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -114,10 +115,11 @@ export default function Home() {
               A selection of my work, from web apps to open-source.
             </p>
           </div>
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-            {portfolioData.projects.map((project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
+          <div className="w-full">
+            <ThreeDCarousel 
+              items={portfolioData.projects}
+              renderItem={(project) => <ProjectCard project={project} />}
+            />
           </div>
         </div>
       </section>

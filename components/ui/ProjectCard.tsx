@@ -3,43 +3,85 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 
 type Project = {
   title: string;
-  category: string;
+  description: string;
   image: string;
+  category: string;
+  tech: string[];
+  github?: string;
   demo: string;
+  highlights?: string[];
 };
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link href={project.demo} target="_blank" className="block group">
-      <motion.div 
-        className="relative w-full p-6 bg-gray-900/50 border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-purple-400/50 hover:shadow-2xl hover:shadow-purple-500/10"
-        whileHover={{ y: -8 }}
-        transition={{ type: 'spring', stiffness: 300 }}
-      >
-        <div className="mb-4 overflow-hidden rounded-lg aspect-video">
-          <Image
-            src={project.image}
-            alt={project.title}
-            width={800}
-            height={450}
-            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
+    <motion.div
+      className="group relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-gray-900"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.3 }}
+    >
+      {/* Full Background Image */}
+      <div className="absolute inset-0 w-full h-full bg-gray-900">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-contain transition-transform duration-700 group-hover:scale-105"
+          priority
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+      </div>
 
-        <div className="absolute bottom-6 left-6 right-6">
-          <h3 className="text-xl font-bold text-white">{project.title}</h3>
-          <p className="text-gray-400">{project.category}</p>
+      {/* Content Overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
+        <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+          <div className="flex justify-between items-end mb-2">
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-1">{project.title}</h3>
+              <p className="text-sm text-gray-300 line-clamp-2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                {project.description}
+              </p>
+            </div>
+            
+            <div className="flex gap-3 mb-1">
+              {project.github && (
+                <Link 
+                  href={project.github}
+                  target="_blank"
+                  className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Github size={20} />
+                </Link>
+              )}
+              <Link 
+                href={project.demo}
+                target="_blank"
+                className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-purple-500 hover:text-white transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ArrowUpRight size={20} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Tech Stack - Minimal */}
+          <div className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+            {project.tech.slice(0, 4).map((tech) => (
+              <span 
+                key={tech}
+                className="text-xs text-gray-300 px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/10"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
-        
-        <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-black/50 border border-white/10 rounded-full text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          Live Demo
-          <ArrowUpRight size={14} />
-        </div>
-      </motion.div>
-    </Link>
+      </div>
+    </motion.div>
   );
 } 

@@ -40,6 +40,21 @@ export const portfolioData = {
   ],
   projects: [
     {
+      title: "FlowSpace",
+      description: "The next generation virtual office platform. Build immersive spaces where teams naturally connect and collaborate.",
+      image: "/Flowspace.png",
+      category: "Full Stack",
+      tech: ["Next.js", "React", "Tailwind CSS", "WebRTC", "Socket.io"],
+      github: "https://github.com/vipulshetty/flowspace",
+      demo: "https://flowspaceweb.vercel.app/",
+      highlights: [
+        "Immersive virtual office spaces",
+        "Real-time collaboration tools",
+        "Seamless team connectivity",
+        "Interactive environments",
+      ],
+    },
+    {
       title: "EcoEarn",
       description: "AI-powered waste management platform with blockchain-based rewards system, revolutionizing recycling incentives.",
       image: "/ecoEarn.jpg",
@@ -154,4 +169,4 @@ export const portfolioData = {
       { name: "AWS", color: "#FF9900" },
     ],
   },
-}; 
+};
